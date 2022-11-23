@@ -15,7 +15,7 @@ const Nft = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const contractAddr = process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDR;
+  const contractAddr = process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDR || "xxx";
 
   return (
     <Stack>

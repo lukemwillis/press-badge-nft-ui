@@ -3,7 +3,6 @@ import { SWRResponse } from "swr";
 import {
   useKoinBalance,
   useManaBalance,
-  useVhpBalance,
 } from "./BalanceUtils";
 
 type BalancesContextType = {
@@ -23,7 +22,6 @@ const PoolBalancesProvider = ({
 }): JSX.Element => {
   const balances = {
     koin: useKoinBalance(process.env.NEXT_PUBLIC_POOL_CONTRACT_ADDR!),
-    vhp: useVhpBalance(process.env.NEXT_PUBLIC_POOL_CONTRACT_ADDR!),
     mana: useManaBalance(process.env.NEXT_PUBLIC_POOL_CONTRACT_ADDR!)
   };
 
