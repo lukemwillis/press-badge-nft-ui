@@ -95,12 +95,26 @@ export default function NftMintButton({
     }
   };
 
-  return typeof owner.data === "undefined" ? (
-    <Spinner />
-  ) : !isAccountWhitelisted?.data &&
-    parseInt(totalReserved?.data) + parseInt(totalSupply?.data) > 49 ? (
-    <Button disabled>Reserved</Button>
-  ) : !owner.data ? (
+  if (process.env.NEXT_PUBLIC_MINTING_LIVE === "false") {
+    return <Button disabled>SOON</Button>;
+  }
+
+  if (typeof owner.data === "undefined") {
+    return <Spinner />;
+  }
+
+  if (owner.data) {
+    return <Button disabled>MINTED</Button>;
+  }
+
+  if (
+    !isAccountWhitelisted?.data &&
+    parseInt(totalReserved?.data) + parseInt(totalSupply?.data) >= 50
+  ) {
+    return <Button disabled>RESERVED</Button>;
+  }
+
+  return (
     <>
       <Button
         onClick={onOpen}
@@ -128,7 +142,7 @@ export default function NftMintButton({
           <ModalHeader>Mint Press Badge #{number}?</ModalHeader>
           <ModalBody>
             {!account ? (
-              <Box textAlign="center">
+              <Box textAlign="center" marginTop={10} marginBottom={10}>
                 <KondorConnector />
                 <Text>to continue</Text>
               </Box>
@@ -162,7 +176,5 @@ export default function NftMintButton({
         </ModalContent>
       </Modal>
     </>
-  ) : (
-    <Button disabled>Owned by {owner.data}</Button>
   );
 }
