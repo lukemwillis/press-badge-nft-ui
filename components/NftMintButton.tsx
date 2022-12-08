@@ -98,7 +98,7 @@ export default function NftMintButton({
   return typeof owner.data === "undefined" ? (
     <Spinner />
   ) : !isAccountWhitelisted?.data &&
-    totalReserved?.data + totalSupply?.data > 49 ? (
+    parseInt(totalReserved?.data) + parseInt(totalSupply?.data) > 49 ? (
     <Button disabled>Reserved</Button>
   ) : !owner.data ? (
     <>
