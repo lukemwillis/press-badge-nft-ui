@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import { Grid, Stack, StackDivider, Text } from "@chakra-ui/react";
+import { Flex, Grid, Text } from "@chakra-ui/react";
 
 import NftGridItem from "../components/NftGridItem";
 
 const Home: NextPage = () => {
   return (
-    <Stack>
+    <Flex direction="column">
       <Text as="h1" fontSize="4xl">
         Press Badge NFTs
       </Text>
@@ -18,14 +18,15 @@ const Home: NextPage = () => {
         This collection is for the people who have supported this project from
         the beginning.
       </Text>
-      <StackDivider />
       <Grid
         templateColumns={{
           base: "repeat(2, 1fr)",
           md: "repeat(3, 1fr)",
           lg: "repeat(5, 1fr)",
         }}
-        gap={6}
+        gap={2}
+        marginInline={-2}
+        marginTop={4}
       >
         {Array.from(Array(50).keys())
           .map((i) => (i + 1).toString().padStart(2, "0"))
@@ -33,7 +34,7 @@ const Home: NextPage = () => {
             <NftGridItem key={num} number={num} />
           ))}
       </Grid>
-    </Stack>
+    </Flex>
   );
 };
 

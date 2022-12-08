@@ -12,8 +12,6 @@ const nftAbi: Abi = {
 };
 
 type ContractsContextType = {
-  provider?: Provider;
-  koin?: Contract;
   nft?: Contract;
 };
 
@@ -35,13 +33,6 @@ export const ContractsProvider = ({
   return (
     <ContractsContext.Provider
       value={{
-        provider: provider,
-        koin: new Contract({
-          id: process.env.NEXT_PUBLIC_KOIN_CONTRACT_ADDR,
-          abi: utils.tokenAbi,
-          provider: provider,
-          signer: signer,
-        }),
         nft: new Contract({
           id: process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDR,
           abi: nftAbi,

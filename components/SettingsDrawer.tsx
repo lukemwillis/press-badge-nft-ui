@@ -9,16 +9,10 @@ import {
   IconButton,
   Input,
 } from "@chakra-ui/react";
-import {
-  MoonIcon,
-  SunIcon,
-  SettingsIcon,
-  TriangleUpIcon,
-  TriangleDownIcon,
-  AddIcon,
-} from "@chakra-ui/icons";
+import { MoonIcon, SunIcon, SettingsIcon, AddIcon } from "@chakra-ui/icons";
 import { useRpc } from "../context/RpcProvider";
 import { ChangeEvent, useRef, useState } from "react";
+import { useAccount } from "../context/AccountProvider";
 
 export default function SettingsDrawer() {
   const { colorMode, setColorMode } = useColorMode();
@@ -28,6 +22,7 @@ export default function SettingsDrawer() {
   );
   const [customRpc, setCustomRpc] = useState(customRpcSelected ? rpc! : "");
   const customRpcInput = useRef<HTMLInputElement>(null);
+  const { account } = useAccount();
 
   const selectStandardRpc = (url: string) => {
     setCustomRpcSelected(false);
