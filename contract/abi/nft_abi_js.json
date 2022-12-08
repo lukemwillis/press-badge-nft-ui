@@ -1,5 +1,12 @@
 {
   "methods": {
+    "initialize": {
+      "argument": "nft.initialize_arguments",
+      "return": "nft.initialize_result",
+      "description": "Initialize the contract state",
+      "entry_point": 1192148610,
+      "read_only": false
+    },
     "name": {
       "argument": "nft.name_arguments",
       "return": "nft.name_result",
@@ -69,12 +76,73 @@
       "description": "Approves or revokes an address to operate on all tokens owned by caller",
       "entry_point": 541336086,
       "read_only": false
+    },
+    "reserve": {
+      "argument": "nft.reserve_arguments",
+      "return": "nft.reserve_result",
+      "description": "Reserve a number of tokens for whitelist claiming",
+      "entry_point": 1844595767,
+      "read_only": false
+    },
+    "whitelist": {
+      "argument": "nft.whitelist_arguments",
+      "return": "nft.whitelist_result",
+      "description": "Assign a number of reserved tokens to an address",
+      "entry_point": 3988503134,
+      "read_only": false
+    },
+    "is_whitelisted": {
+      "argument": "nft.is_whitelisted_arguments",
+      "return": "nft.is_whitelisted_result",
+      "description": "Checks whether address has been assigned any whitelist spots",
+      "entry_point": 3646782151,
+      "read_only": true
+    },
+    "total_supply": {
+      "argument": "nft.total_supply_arguments",
+      "return": "nft.total_supply_result",
+      "description": "Gets the total number of minted tokens",
+      "entry_point": 2967091508,
+      "read_only": true
+    },
+    "total_reserved": {
+      "argument": "nft.total_reserved_arguments",
+      "return": "nft.total_reserved_result",
+      "description": "Gets the total number of reserved tokens",
+      "entry_point": 1587655058,
+      "read_only": true
     }
   },
   "types": {
     "nested": {
       "nft": {
         "nested": {
+          "initialize_arguments": {
+            "fields": {
+              "supply": {
+                "type": "uint64",
+                "id": 1,
+                "options": {
+                  "jstype": "JS_STRING"
+                }
+              },
+              "reserved": {
+                "type": "uint64",
+                "id": 2,
+                "options": {
+                  "jstype": "JS_STRING"
+                }
+              }
+            }
+          },
+          "initialize_result": {
+            "fields": {
+              "value": {
+                "type": "bool",
+                "id": 1
+              }
+            }
+          },
           "name_arguments": {
             "fields": {}
           },
@@ -308,6 +376,98 @@
               "value": {
                 "type": "bool",
                 "id": 1
+              }
+            }
+          },
+          "reserve_arguments": {
+            "fields": {
+              "amount": {
+                "type": "uint64",
+                "id": 1,
+                "options": {
+                  "jstype": "JS_STRING"
+                }
+              }
+            }
+          },
+          "reserve_result": {
+            "fields": {
+              "value": {
+                "type": "bool",
+                "id": 1
+              }
+            }
+          },
+          "whitelist_arguments": {
+            "fields": {
+              "address": {
+                "type": "bytes",
+                "id": 1,
+                "options": {
+                  "(koinos.btype)": "ADDRESS"
+                }
+              },
+              "amount": {
+                "type": "uint64",
+                "id": 2,
+                "options": {
+                  "jstype": "JS_STRING"
+                }
+              }
+            }
+          },
+          "whitelist_result": {
+            "fields": {
+              "value": {
+                "type": "bool",
+                "id": 1
+              }
+            }
+          },
+          "is_whitelisted_arguments": {
+            "fields": {
+              "address": {
+                "type": "bytes",
+                "id": 1,
+                "options": {
+                  "(koinos.btype)": "ADDRESS"
+                }
+              }
+            }
+          },
+          "is_whitelisted_result": {
+            "fields": {
+              "value": {
+                "type": "bool",
+                "id": 1
+              }
+            }
+          },
+          "total_supply_arguments": {
+            "fields": {}
+          },
+          "total_supply_result": {
+            "fields": {
+              "value": {
+                "type": "uint64",
+                "id": 1,
+                "options": {
+                  "jstype": "JS_STRING"
+                }
+              }
+            }
+          },
+          "total_reserved_arguments": {
+            "fields": {}
+          },
+          "total_reserved_result": {
+            "fields": {
+              "value": {
+                "type": "uint64",
+                "id": 1,
+                "options": {
+                  "jstype": "JS_STRING"
+                }
               }
             }
           },

@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Flex,
   Grid,
   Stack,
@@ -9,13 +8,17 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import NftImage from "../../components/NftImage";
+import NftMintButton from "../../components/NftMintButton";
 import OutboundLink from "../../components/OutboundLink";
+import { useOwner } from "../../context/NftProvider";
 
 const Nft = () => {
   const router = useRouter();
   const { id } = router.query;
+  const number = id as string;
+  const owner = useOwner(number);
 
-  const contractAddr = process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDR || "xxx";
+  const contractAddr = process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDR;
 
   return (
     <Stack>
@@ -24,12 +27,8 @@ const Nft = () => {
       </Text>
       <StackDivider />
       <Flex gap={6} flexDirection={{ base: "column", md: "row" }} width="100%">
-        <Box>
-          <NftImage
-            number={id as string}
-            size="100%"
-            grayscale={false}
-          />
+        <Box flexGrow="0">
+          <NftImage number={number} size="100%" grayscale={false} />
         </Box>
         <Stack flexGrow="1">
           <Text>
@@ -59,8 +58,23 @@ const Nft = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Text fontSize="3xl">500 KOIN</Text>
-            <Button colorScheme="blue">Buy now</Button>
+            {owner.data ? (
+              <>
+                <Text fontSize="2xl">Owned by</Text>
+                <OutboundLink
+                  href={`https://koinosblocks.com/address/${owner.data}`}
+                  fontSize="2xl"
+                >
+                  {owner.data.substring(0, 4)}...
+                  {owner.data.substring(owner.data.length - 4)}
+                </OutboundLink>
+              </>
+            ) : (
+              <>
+                <Text fontSize="3xl">Mint Now</Text>
+                <NftMintButton number={number} />
+              </>
+            )}
           </Flex>
           <StackDivider />
 
@@ -79,16 +93,20 @@ const Nft = () => {
             <Text as="dd">50 items</Text>
 
             <Text as="dt">Token Id</Text>
-            <Text as="dd">{id}</Text>
+            <Text as="dd">{number}</Text>
 
             <Text as="dt">Contract Address</Text>
             <Text as="dd">
-              <OutboundLink
-                href={`https://koinosblocks.com/address/${contractAddr}`}
-              >
-                {contractAddr.substring(0, 4)}...
-                {contractAddr.substring(contractAddr.length - 4)}
-              </OutboundLink>
+              {contractAddr ? (
+                <OutboundLink
+                  href={`https://koinosblocks.com/address/${contractAddr}`}
+                >
+                  {contractAddr.substring(0, 4)}...
+                  {contractAddr.substring(contractAddr.length - 4)}
+                </OutboundLink>
+              ) : (
+                "unknown"
+              )}
             </Text>
 
             <Text as="dt">Chain</Text>
