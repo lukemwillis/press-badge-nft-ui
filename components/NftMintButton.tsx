@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   ButtonGroup,
   Modal,
@@ -16,6 +17,7 @@ import { useState } from "react";
 import { useAccount } from "../context/AccountProvider";
 import { useContracts } from "../context/ContractsProvider";
 import { useNft, useOwner } from "../context/NftProvider";
+import KondorConnector from "./KondorConnector";
 import NftImage from "./NftImage";
 
 interface NftMintButtonProps {
@@ -125,18 +127,31 @@ export default function NftMintButton({
         <ModalContent>
           <ModalHeader>Mint Press Badge #{number}?</ModalHeader>
           <ModalBody>
-            <Text marginBottom={6}>
-              Minting this NFT will{" "}
-              {isAccountWhitelisted?.data
-                ? "use your whitelist spot"
-                : "cost 500 KOIN"}
-              . Are you sure?
-            </Text>
-            <NftImage number={number} grayscale={false} size="100%" />
+            {!account ? (
+              <Box textAlign="center">
+                <KondorConnector />
+                <Text>to continue</Text>
+              </Box>
+            ) : (
+              <>
+                <Text marginBottom={6}>
+                  Minting this NFT will{" "}
+                  {isAccountWhitelisted?.data
+                    ? "use your whitelist spot"
+                    : "cost 500 KOIN"}
+                  . Are you sure?
+                </Text>
+                <NftImage number={number} grayscale={false} size="100%" />
+              </>
+            )}
           </ModalBody>
           <ModalFooter>
             <ButtonGroup>
-              <Button colorScheme="green" onClick={onMint} disabled={loading}>
+              <Button
+                colorScheme="green"
+                onClick={onMint}
+                disabled={!account || loading}
+              >
                 {loading ? <Spinner /> : `Yes! Mint for ${price}`}
               </Button>
               <Button onClick={onClose} disabled={loading}>
