@@ -19,6 +19,7 @@ import { useContracts } from "../context/ContractsProvider";
 import { useNft, useOwner } from "../context/NftProvider";
 import KondorConnector from "./KondorConnector";
 import NftImage from "./NftImage";
+import { utils } from "koilib";
 
 interface NftMintButtonProps {
   number: string;
@@ -45,10 +46,13 @@ export default function NftMintButton({
     setLoading(true);
 
     try {
+      const buffer = new TextEncoder().encode(number);
+      const tokenId = `0x${utils.toHexString(buffer)}`;
+
       const result = await nft!.functions.mint(
         {
           to: account,
-          tokenId: parseInt(number),
+          tokenId,
         },
         isAccountWhitelisted?.data
           ? {

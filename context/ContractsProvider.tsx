@@ -3,7 +3,7 @@ import { Contract, Provider, Signer, utils } from "koilib";
 import * as kondor from "../node_modules/kondor-js/lib/browser";
 import { useAccount } from "./AccountProvider";
 import { useRpc } from "./RpcProvider";
-import nftAbiJson from "../contract/abi/nft_abi_js.json";
+import nftAbiJson from "../contract/abi/nft-abi.json";
 import { Abi } from "koilib/lib/interface";
 
 const nftAbi: Abi = {
