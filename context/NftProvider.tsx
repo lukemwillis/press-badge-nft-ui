@@ -2,6 +2,7 @@ import React, { useContext, createContext } from "react";
 import { useAccount } from "./AccountProvider";
 import useSWR, { SWRResponse } from "swr";
 import { useContracts } from "./ContractsProvider";
+import { utils } from "koilib";
 
 type NftContextType = {
   isAccountWhitelisted?: SWRResponse;
@@ -16,9 +17,12 @@ export const useNft = () => useContext(NftContext);
 export const useOwner = (num: string) => {
   const { nft } = useContracts();
   return useSWR(`nft_${num}_owner`, async () => {
+    const buffer = new TextEncoder().encode(num);
+    const tokenId = `0x${utils.toHexString(buffer)}`;
+
     const { result } = await nft!.functions.owner_of<{
       value: string;
-    }>({ tokenId: parseInt(num) });
+    }>({ tokenId });
 
     return result?.value || "";
   });
